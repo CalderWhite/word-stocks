@@ -1,0 +1,4 @@
+matplotlib==2.1.1
+tabulate==0.8.7
+Flask==1.1.2
+pyOpenSSL==20.0.0
