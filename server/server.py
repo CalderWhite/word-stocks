@@ -1,6 +1,8 @@
 import subprocess
 
 from flask import Flask, Response, jsonify, redirect, request
+from flask_talisman import Talisman
+
 from graph_word import plot_word, word_metadata
 
 PROD = True
@@ -8,6 +10,8 @@ SSL_CERT_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/fullchain.pem"
 SSL_PRIVATE_KEY_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/privkey.pem"
 
 app = Flask(__name__, static_url_path='/static', static_folder='public')
+# currently using some unsafe practices with the CDNS. Will deal with later.
+#Talisman(app)
 
 
 @app.route('/graph_word/<word>')
@@ -24,6 +28,7 @@ def word_metadata_endpoint(word):
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
+
 
 if __name__ == '__main__':
     if not PROD:
