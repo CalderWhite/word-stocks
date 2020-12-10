@@ -1,0 +1,101 @@
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: black;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.searchbar {
+    margin-bottom: auto;
+    margin-top: 2em;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.search_input {
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    padding: 0 10px;
+    width: 450px;
+    caret-color:red;
+}
+
+.search_icon {
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 0px;
+    color:white;
+    text-decoration:none;
+    background: white;
+    color: #e74c3c;
+
+    transition: 0.3s;
+}
+
+.search_icon:hover {
+    transform: scale(1.2, 1.2);
+}
+
+#graph-container, iframe {
+    border: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /* just an arbitrary large enough number. Page overflow is hidden and so is iframe overflow */
+}
+
+.graph-stats {
+    color: white;
+    padding-top: 3em;
+}
+
+table {
+    border: 2px solid white;
+    border-radius: 5px;
+    border-collapse: separate;
+}
+
+td {
+    color: white;
+    font-family: Courier New;
+    padding: 0.25em;
+}
+
+td:nth-child(2) {
+    padding-left: 2em;
+    text-align: right;
+}
+
+
+/*
+ * Get rid of the stupid autofill styles.
+ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #353b48 inset;
+  transition: background-color 5000s ease-in-out 0s;
+  font-size: 16px;
+}

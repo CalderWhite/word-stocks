@@ -1,0 +1,23 @@
+# Use postgres/example user/password credentials
+version: '3.2'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    ports:
+        - 5432:5432
+
+    command:
+        - "postgres"
+        - "-c"
+        - "shared_buffers=1GB"
+
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  server:
+      image: .
