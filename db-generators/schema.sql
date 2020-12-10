@@ -55,21 +55,21 @@ CREATE TABLE IF NOT EXISTS words(
     word VARCHAR(32)
 );
 
-CREATE TABLE IF NOT EXISTS quarterly_ratios(
+CREATE TABLE IF NOT EXISTS periodly_ratios(
     symbol VARCHAR(16),
-    quarter INTEGER,
+    period INTEGER,
     ratio double precision,
 
-    PRIMARY KEY (symbol, quarter)
+    PRIMARY KEY (symbol, period)
 );
 
 CREATE TABLE IF NOT EXISTS word_scores(
     word VARCHAR(32),
-    quarter INTEGER,
+    period INTEGER,
     total INTEGER,
     win_percent double precision,
     mean_ratio double precision,
     median_ratio double precision,
 
-    PRIMARY KEY (word, quarter)
+    PRIMARY KEY (word, period)
 );

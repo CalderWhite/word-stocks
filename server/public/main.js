@@ -20,8 +20,6 @@ function changeSVGStyle(iframe) {
     iframe.height = height;
     console.log(iframe);
 
-    //svg.style.margin = "auto";
-
     $("#graph-container").fadeIn(400);
     $("#main-graph-stats").fadeIn(400);
 }
@@ -29,6 +27,15 @@ function changeSVGStyle(iframe) {
 $(document).ready(function() {
     $("#graph-container").fadeOut(0);
     $("#main-graph-stats").fadeOut(0);
+
+    // auto select the search bar when the user starts typing.
+    $(document).keypress(function() {
+        let searchbar = $("#search-input")[0];
+        if (!$("#search-input").is(":focus")) {
+            searchbar.focus();
+            searchbar.select();
+        }
+    });
 
     $("#search-form").submit(function(event) {
         let word = $("#search-input").val();

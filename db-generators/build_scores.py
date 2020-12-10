@@ -4,15 +4,17 @@ from multiprocessing import Pool
 import psycopg2
 from tqdm import tqdm
 
+frequency = 12
 
-def get_word_totals(cursor, quarter):
+
+def get_word_totals(cursor, period):
     cursor.execute(f"""
         SELECT
             word,
             COUNT(*) FILTER (
                 WHERE symbol IN (
                     SELECT DISTINCT symbol
-                    FROM quarterly_ratios WHERE quarter = {quarter}
+                    FROM periodly_ratios WHERE period = {period}
                 )
             ) as word_count
         FROM words
@@ -23,13 +25,13 @@ def get_word_totals(cursor, quarter):
     return cursor.fetchall()
 
 
-def get_winning_words(cursor, quarter):
+def get_winning_words(cursor, period):
     cursor.execute(f"""
         SELECT word, COUNT(*) as word_count FROM words
         WHERE symbol IN (
-            SELECT symbol FROM quarterly_ratios
+            SELECT symbol FROM periodly_ratios
             WHERE
-                quarter = {quarter} AND
+                period = {period} AND
                 ratio >= 1.0
         )
         GROUP BY word
@@ -43,9 +45,9 @@ def get_winning_words(cursor, quarter):
     return win_count_map
 
 
-def get_ratio_map(cursor, quarter):
+def get_ratio_map(cursor, period):
     cursor.execute(f"""
-        SELECT symbol, ratio FROM quarterly_ratios WHERE quarter = {quarter}
+        SELECT symbol, ratio FROM periodly_ratios WHERE period = {period}
     """)
     ratio_map = {}
     for symbol, ratio in cursor:
@@ -54,15 +56,15 @@ def get_ratio_map(cursor, quarter):
     return ratio_map
 
 
-def generate_quarter_scores(quarter):
+def generate_period_scores(period):
     conn_string = "dbname='investment_data' user='calder' host='localhost'"
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
 
-    #print("Calculating", quarter, "...")
-    word_totals = get_word_totals(cursor, quarter)
-    win_count_map = get_winning_words(cursor, quarter)
-    ratio_map = get_ratio_map(cursor, quarter)
+    #print("Calculating", period, "...")
+    word_totals = get_word_totals(cursor, period)
+    win_count_map = get_winning_words(cursor, period)
+    ratio_map = get_ratio_map(cursor, period)
 
     win_percent_map = {}
     for word, total in word_totals:
@@ -102,10 +104,10 @@ def generate_quarter_scores(quarter):
             median = ratios[rlen//2]
 
         total, win_percent = win_percent_map[word]
-        out_rows.append((word, quarter, total, win_percent, mean, median))
+        out_rows.append((word, period, total, win_percent, mean, median))
 
-    #print("Inserting", quarter, "...")
-    headers = ['word', 'quarter', 'total', 'win_percent', 'mean_ratio',
+    #print("Inserting", period, "...")
+    headers = ['word', 'period', 'total', 'win_percent', 'mean_ratio',
                'median_ratio']
     header = ",".join(headers)
     template = ",".join(["%s"]*len(headers))
@@ -116,12 +118,12 @@ def generate_quarter_scores(quarter):
 
 def main():
     today = datetime.today()
-    current_quarter = today.year*4 + today.month//3
+    current_period = today.year*frequency + today.month//(12//frequency)
     # don't over parallelize. work out how many workers is right for your setup.
     p = Pool(4)
-    for i in tqdm(p.imap_unordered(generate_quarter_scores,
-                                 range(current_quarter,
-                                       current_quarter-20*4, -1)), total=20*4):
+    for i in tqdm(p.imap_unordered(generate_period_scores,
+                                 range(current_period,
+                                       current_period-20*frequency, -1)), total=20*frequency):
         pass
 
 

@@ -1,9 +1,9 @@
 """
-Generates the ratios for the past n quarters.
+Generates the ratios for the past n periods.
 This script can be configured to generate ratios for different time period
 and offsets.
 
-NOTE: Q1 is represented as 0 in terms of quarter "index"
+NOTE: Q1 is represented as 0 in terms of period "index"
 """
 from multiprocessing import Pool
 from datetime import datetime
@@ -12,8 +12,13 @@ import calendar
 import psycopg2
 from tqdm import tqdm
 
+# 1 : yearly
+# 4 : periodly
+# 12 : monthly
+frequency = 12
 
-def generate_ratios(quarter):
+
+def generate_ratios(period):
     conn_string = "dbname='investment_data' user='calder' host='localhost'"
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
@@ -21,15 +26,15 @@ def generate_ratios(quarter):
     begin_closes = {}
 
     # figuring out the dates
-    year = quarter//4
-    month = (quarter%4)*3 + 1
+    year = period//frequency
+    month = (period%frequency)*(12//frequency) + 1
     firstday = 1
-    _, lastday = calendar.monthrange(year, month+2)
+    _, lastday = calendar.monthrange(year, month+(12//frequency - 1))
 
     first_timestamp = datetime(year, month, firstday).timestamp()
-    last_timestamp = datetime(year, month+2, lastday).timestamp()
+    last_timestamp = datetime(year, month+(12//frequency - 1), lastday).timestamp()
 
-    # get the initial closes of the quarter
+    # get the initial closes of the period
     cursor.execute(f"""
         SELECT DISTINCT ON (symbol) symbol, close FROM stocks
         WHERE timestamp BETWEEN {first_timestamp} AND {last_timestamp}
@@ -38,7 +43,7 @@ def generate_ratios(quarter):
     for symbol, close in cursor.fetchall():
         begin_closes[symbol] = close
 
-    # get the final closes of the quarter and calculate the ratio of final/initial
+    # get the final closes of the period and calculate the ratio of final/initial
     cursor.execute(f"""
         SELECT DISTINCT ON (symbol) symbol, close FROM stocks
         WHERE timestamp BETWEEN {first_timestamp} AND {last_timestamp}
@@ -48,9 +53,9 @@ def generate_ratios(quarter):
     for symbol, close in cursor.fetchall():
         if close is None or begin_closes[symbol] is None:
             continue
-        rows.append((symbol, quarter, close/begin_closes[symbol]))
+        rows.append((symbol, period, close/begin_closes[symbol]))
 
-    cursor.executemany("INSERT INTO quarterly_ratios(symbol, quarter, ratio)\
+    cursor.executemany("INSERT INTO periodly_ratios(symbol, period, ratio)\
                        VALUES(%s, %s, %s)", rows)
     conn.commit()
 
@@ -61,11 +66,11 @@ def main():
     # of 3, so adding in a multiprocessing pool with 2 workers does increase
     # performance a little bit
     today = datetime.today()
-    current_quarter = today.year*4 + today.month//3
+    current_period = today.year*frequency + today.month//(12//frequency)
     p = Pool(2)
     for i in tqdm(p.imap_unordered(generate_ratios,
-                                 range(current_quarter,
-                                       current_quarter-20*4, -1)), total=20*4):
+                                 range(current_period,
+                                       current_period-20*frequency, -1)), total=20*frequency):
         pass
 
 

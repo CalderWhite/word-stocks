@@ -17,12 +17,12 @@ def plot_word(word):
 
     cursor.execute(f"""
         SELECT
-            CAST(quarter AS float)/4,
+            CAST(period AS float)/12,
             win_percent,
             median_ratio
         FROM word_scores
         WHERE
-            word='{word}' ORDER BY quarter ASC
+            word='{word}' ORDER BY period ASC
     """)
 
     x = []
@@ -49,8 +49,10 @@ def plot_word(word):
     fig = Figure(figsize=(10, 5))
     axis = fig.add_subplot(1, 1, 1)
 
-    axis.plot(x, r, x, r2)
-    axis.legend(['Win Percent', 'Close'])
+    #axis.plot(x, r, x, r2)
+    #axis.legend(['Win Percent', 'Close'])
+    axis.plot(x, r2)
+    axis.legend(['Close'])
     axis.set_xlabel('Year')
     axis.set_ylabel(f'% Change since {x[0]}')
     fig.suptitle(f'Performance of stocks containing "{word}" v Time')
@@ -86,6 +88,5 @@ def word_metadata(word):
 
 
 if __name__ == '__main__':
-    print(word_metadata(sys.argv[1]))
-    #plot_svg = plot_word(sys.argv[1])
-    #open("out.svg", 'wb').write(plot_svg.getvalue())
+    plot_svg = plot_word(sys.argv[1])
+    open("out.svg", 'wb').write(plot_svg.getvalue())
