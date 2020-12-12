@@ -16,7 +16,7 @@ from matplotlib.backends.backend_svg import FigureCanvasSVG
 from tabulate import tabulate
 
 
-def plot_word(word):
+def get_word_data(word):
     conn_string = "dbname='investment_data' user='calder' host='localhost'"
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
@@ -48,6 +48,13 @@ def plot_word(word):
     for i in y2[1:]:
         current_ratio *= i
         r2.append((current_ratio - 1)*100)
+
+    return x, r2
+
+
+def plot_word(word):
+    
+    x, r2 = get_word_data(word)
 
     plt.style.use('gadfly_dark')
     plt.gca().yaxis.set_major_formatter(PercentFormatter(decimals=2))

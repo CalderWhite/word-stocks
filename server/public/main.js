@@ -21,9 +21,9 @@ $(document).ready(function() {
         let graph = $("#graph")[0];
 
         $("#graph").fadeTo(0, 0);
-        graph.src = "/graph_word/" + word;
+        graph.src = "/api/words/" + word + "/graph";
 
-        $.get("/word_metadata/" + word, function(data) {
+        $.get("/api/words/" + word + "/metadata", function(data) {
             let stats = $(".graph-stats");
             for (let i=0; i<2; ++i) {
                 item = stats[i];

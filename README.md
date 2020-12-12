@@ -1,4 +1,4 @@
-# stock-word-performance
+# word-stocks
 
 Track the performance of stocks containing a particular word over time!
 

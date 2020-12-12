@@ -1,26 +1,33 @@
 import subprocess
 
 from flask import Flask, Response, jsonify, redirect, request
-from flask_talisman import Talisman
 
-from graph_word import plot_word, word_metadata
+from graph_word import plot_word, get_word_data, word_metadata
 
-PROD = True
+PROD = False
 SSL_CERT_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/fullchain.pem"
 SSL_PRIVATE_KEY_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/privkey.pem"
 
 app = Flask(__name__, static_url_path='/static', static_folder='public')
 # currently using some unsafe practices with the CDNS. Will deal with later.
-#Talisman(app)
 
 
-@app.route('/graph_word/<word>')
+@app.route('/api/words/<word>/graph')
 def graph_word_endpoint(word):
     graph_svg = plot_word(word)
     return Response(graph_svg.getvalue(), mimetype="image/svg+xml")
 
 
-@app.route('/word_metadata/<word>')
+@app.route('/api/words/<word>/historical_data')
+def get_word_data_endpoint(word):
+    x, y = get_word_data(word)
+    return jsonify({
+        "time": x,
+        "price": y
+    })
+
+
+@app.route('/api/words/<word>/metadata')
 def word_metadata_endpoint(word):
     return jsonify(word_metadata(word))
 
