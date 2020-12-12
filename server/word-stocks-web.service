@@ -1,0 +1,13 @@
+[Unit]
+Description=Runs the word-stocks flask server on HTTPS.
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/calder/word-stocks/server
+ExecStart=/usr/bin/python3 server.py
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target

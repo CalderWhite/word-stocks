@@ -2,7 +2,13 @@ import sys
 import io
 
 import psycopg2
+
+# this allows us to not have an X server running
+import matplotlib
+matplotlib.use("Agg")
+
 import matplotlib.pyplot as plt
+
 from matplotlib.ticker import PercentFormatter
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_svg import FigureCanvasSVG
