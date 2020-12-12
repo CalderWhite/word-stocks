@@ -1,4 +1,5 @@
 import subprocess
+from datetime import datetime
 
 from flask import Flask, Response, jsonify, redirect, request
 
@@ -20,11 +21,21 @@ def graph_word_endpoint(word):
 
 @app.route('/api/words/<word>/historical_data')
 def get_word_data_endpoint(word):
-    x, y = get_word_data(word)
-    return jsonify({
-        "time": x,
-        "price": y
-    })
+    x, y = get_word_data(word, chart=True)
+
+    # format the data for tradingview
+    data_points = []
+
+    # make it as though we start at 100 (perhaps $100, for example),
+    # and see where we end up based on the ratios
+    for i in range(len(x)):
+        # convert the year (which includes its decimals) to a timestamp
+        timestamp = (x[i] - 1970)*(365*24*60*60)
+        time_str = str(datetime.fromtimestamp(timestamp)).split(" ")[0]
+
+        data_points.append({"time": time_str, "value": y[i]})
+
+    return jsonify({"chart": data_points})
 
 
 @app.route('/api/words/<word>/metadata')

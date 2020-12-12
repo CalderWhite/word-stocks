@@ -51,11 +51,10 @@ body, html {
     transform: scale(1.2, 1.2);
 }
 
-#graph-container, iframe {
-    border: none;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    /* just an arbitrary large enough number. Page overflow is hidden and so is iframe overflow */
+#graph-container {
+    margin: 5px;
+    border-bottom: 2px solid white;
+    border-radius: 3px;
 }
 
 .graph-stats {

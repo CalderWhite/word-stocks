@@ -16,7 +16,7 @@ from matplotlib.backends.backend_svg import FigureCanvasSVG
 from tabulate import tabulate
 
 
-def get_word_data(word):
+def get_word_data(word, chart=False):
     conn_string = "dbname='investment_data' user='calder' host='localhost'"
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
@@ -47,7 +47,12 @@ def get_word_data(word):
     current_ratio = 1
     for i in y2[1:]:
         current_ratio *= i
-        r2.append((current_ratio - 1)*100)
+
+        # we dont want negative values in a chart.
+        if chart:
+            r2.append(current_ratio*100)
+        else:
+            r2.append((current_ratio - 1)*100)
 
     return x, r2
 
