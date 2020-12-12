@@ -39,7 +39,7 @@ def get_word_data(word, chart=False):
         y.append(wp)
         y2.append(mr)
 
-    r = [(i/y[0] - 1)*100 for i in y]
+    #r = [(i/y[0] - 1)*100 for i in y]
     #r2 = [i/y2[0] for i in y2]
     # the second are already ratios, so if we want to see the relationship
     # of the _close_ to the first close, we just multiply the ratios by eachother
