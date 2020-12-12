@@ -43,6 +43,11 @@ def word_metadata_endpoint(word):
     return jsonify(word_metadata(word))
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return app.send_static_file('favicon.ico')
+
+
 @app.route('/')
 def root():
     return app.send_static_file('index.html')
