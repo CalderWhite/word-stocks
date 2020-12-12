@@ -54,7 +54,7 @@ def plot_word(word):
     axis.plot(x, r2)
     axis.legend(['Close'])
     axis.set_xlabel('Year')
-    axis.set_ylabel(f'% Change since {x[0]}')
+    axis.set_ylabel(f'% Change since {int(x[0])}')
     fig.suptitle(f'Performance of stocks containing "{word}" v Time')
 
     #plt.savefig("word_graph.svg", edgecolor="black")
