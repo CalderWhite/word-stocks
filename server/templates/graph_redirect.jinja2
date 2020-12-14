@@ -1,12 +1,7 @@
+{% set title = 'Performance of \'' + word + '\' stocks | Word Stocks' %}
+
 <html>
     <head>
-        <title>Word Stocks | Track the Performance of stocks relating to a word</title>
-
-        <meta name="twitter:creator" content="@calder_white" />
-
-        <!-- open graph stuff !-->
-        <meta property="og:image" content="/api/words/{{word}}/graph" />
-
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-36KJ1DFVYR"></script>
@@ -18,7 +13,27 @@
           gtag('config', 'G-36KJ1DFVYR');
         </script>
 
-        <script src="/static/main.js"></script>
+        <!-- Maybe this makes the redirect faster by being at the top of the xml doc? !-->
+        <script> window.location.href = "https://{{hostname}}/?word={{word}}"</script>
+
+        <title>{{ title }}</title>
+
+        <meta name="twitter:creator" content="@calder_white" />
+
+        <!-- open graph stuff !-->
+        <meta data-rh="true" property="twitter:title" content="{{ title }}">
+        <meta property="og:image" content="https://{{hostname}}/api/words/{{word}}/graph?format=png" />
+
+        <meta property="og:description" content="Track the Performance of stocks relating to a word." />
+
+        <!-- maybe we can trick the crawler bots to point to the actual web app instead of this dummy page? !-->
+        <meta property="og:url" content="https://{{hostname}}/?word={{word}}" />
+
+        <!-- twitter stuff !-->
+        <meta data-rh="true" property="twitter:title" content="{{ title }}">
+        <meta data-rh="true" name="twitter:card" content="summary_large_image">
+
+
     </head>
     <body>
     </body>

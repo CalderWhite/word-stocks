@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import PercentFormatter
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_svg import FigureCanvasSVG
+from matplotlib.backends.backend_agg import FigureCanvasAgg
 
 from tabulate import tabulate
 
@@ -57,7 +58,7 @@ def get_word_data(word, chart=False):
     return x, r2
 
 
-def plot_word(word):
+def plot_word(word, output_format='svg'):
     
     x, r2 = get_word_data(word)
 
@@ -77,7 +78,10 @@ def plot_word(word):
 
     #plt.savefig("word_graph.svg", edgecolor="black")
     output = io.BytesIO()
-    FigureCanvasSVG(fig).print_svg(output)
+    if output_format == 'svg':
+        FigureCanvasSVG(fig).print_svg(output)
+    elif output_format == 'png':
+        FigureCanvasAgg(fig).print_png(output)
 
     return output
 
