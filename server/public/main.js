@@ -9,16 +9,22 @@ function fadeInGraph() {
 }
 
 function generateSocials(word) {
+    // call until twitter is loaded.
+    if (twttr.widgets === undefined) {
+        setTimeout(function(){generateSocials(word)}, 50);
+        return;
+    } else if (twttr.widgets === undefined) {
+        twtter.ready(function() {
+            generateSocials(word);
+        });
+    }
+
     let tweetContainer = $("#twitter-container")[0];
 
     // just in case something whacky happens and 2 buttons appear.
     while (tweetContainer.children.length > 0) {
         tweetContainer.removeChild(tweetContainer.firstChild);
     };
-
-    //tweet.dataUrl =     tweet.dataSize = "large";
-
-    //tweetContainer.appendChild(tweet);
 
     twttr.widgets.createShareButton(
         "https://word-stocks.calderwhite.me/words/" + word + "?a=1",
@@ -127,5 +133,10 @@ $(document).ready(function() {
         event.preventDefault();
     });
 
-    //if (
+    let query = new URLSearchParams(window.location.search);
+
+    if (query.get("word") != undefined) {
+        $("#search-input").val(query.get("word"));
+        $("#search-submit").click();
+    }
 });

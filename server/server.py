@@ -5,7 +5,7 @@ from flask import Flask, Response, jsonify, redirect, request, render_template
 
 from graph_word import plot_word, get_word_data, word_metadata
 
-PROD = True
+PROD = False
 SSL_CERT_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/fullchain.pem"
 SSL_PRIVATE_KEY_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/privkey.pem"
 
