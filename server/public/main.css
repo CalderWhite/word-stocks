@@ -60,6 +60,16 @@ body, html {
     padding-top: 3em;
 }
 
+.share-button-container {
+    padding: 5px;
+}
+
+.share-text {
+    font-family: Courier New;
+    color: white;
+    margin-bottom: 2px;
+}
+
 table {
     border: 2px solid white;
     border-radius: 5px;

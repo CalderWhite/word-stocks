@@ -1,7 +1,7 @@
 import subprocess
 from datetime import datetime
 
-from flask import Flask, Response, jsonify, redirect, request
+from flask import Flask, Response, jsonify, redirect, request, render_template
 
 from graph_word import plot_word, get_word_data, word_metadata
 
@@ -9,9 +9,11 @@ PROD = False
 SSL_CERT_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/fullchain.pem"
 SSL_PRIVATE_KEY_PATH = "/etc/letsencrypt/live/word-stocks.calderwhite.me/privkey.pem"
 
-app = Flask(__name__, static_url_path='/static', static_folder='public')
+app = Flask(__name__, static_url_path='/static', static_folder='public', template_folder='templates')
 # currently using some unsafe practices with the CDNS. Will deal with later.
 
+
+## API endpoints
 
 @app.route('/api/words/<word>/graph')
 def graph_word_endpoint(word):
@@ -41,6 +43,14 @@ def get_word_data_endpoint(word):
 @app.route('/api/words/<word>/metadata')
 def word_metadata_endpoint(word):
     return jsonify(word_metadata(word))
+
+
+## Web endpoints
+
+# this redirect is important because we set the thumbnail to the svg graph
+@app.route('/words/<word>')
+def word_redirect(word):
+    render_template('graph_redirect.jinja2', word=word)
 
 
 @app.route('/favicon.ico')

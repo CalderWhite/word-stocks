@@ -97,7 +97,6 @@ def word_metadata(word):
     """)
 
     symbol_count = cursor.fetchone()[0]
-    print(symbol_count)
 
     table = [("Match Count:", str(symbol_count)), ("Exchanges:", "NYSE, Nasdaq, TSX")]
     html = tabulate(table, tablefmt="html")
