@@ -18,18 +18,16 @@
 
         <title>{{ title }}</title>
 
+        <!-- open graph stuff !-->
+        <meta property="twitter:title" content="{{ title }}">
+        <meta property="og:image" content="https://{{hostname}}/api/words/{{word}}/graph?format=png" />
+        <meta property="og:url" content="https://{{hostname}}/words/{{word}}" />
+        <meta property="og:description" content="Track the Performance of stocks relating to a word." />
+
         <!-- twitter stuff !-->
         <meta name="twitter:title" content="{{ title }}">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:creator" content="@calder_white" />
-
-
-        <!-- open graph stuff !-->
-        <meta property="twitter:title" content="{{ title }}">
-        <meta name="image" property="og:image" content="https://{{hostname}}/api/words/{{word}}/graph?format=png" />
-        <meta property="og:url" content="https://{{hostname}}/words/{{word}}" />
-
-        <meta property="og:description" content="Track the Performance of stocks relating to a word." />
     </head>
     <body>
     </body>
