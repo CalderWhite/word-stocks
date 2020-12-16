@@ -1,3 +1,23 @@
+/*
+ * Get rid of the stupid autofill styles.
+ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #353b48 inset;
+  transition: background-color 5000s ease-in-out 0s;
+  font-size: 16px;
+}
+
+
 body, html {
     height: 100%;
     width: 100%;
@@ -87,22 +107,13 @@ td:nth-child(2) {
     text-align: right;
 }
 
+#linkedin-container, #twitter-container {
+    margin: 5px;
+}
 
-/*
- * Get rid of the stupid autofill styles.
- */
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  border: none;
-  -webkit-text-fill-color: white;
-  -webkit-box-shadow: 0 0 0px 1000px #353b48 inset;
-  transition: background-color 5000s ease-in-out 0s;
-  font-size: 16px;
+/** This is pretty hacky, but it works for now. **/
+/** Context: The generated linkedin button is awkwardly smaller than the twitter one. **/
+.IN-widget {
+    margin-top: 3px !important;
+    transform: scale(1.2);
 }
