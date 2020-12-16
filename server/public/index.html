@@ -49,7 +49,7 @@
             <form id="search-form">
                 <div class="searchbar">
                   <input id="search-input" class="search_input" type="text" name="" placeholder="Enter a word...">
-                  <button type="submit"  class="search_icon"><i class="fas fa-search"></i></button>
+                  <button id="search-submit" type="submit"  class="search_icon"><i class="fas fa-search"></i></button>
                 </div>
             </form>
           </div>
@@ -65,12 +65,8 @@
                 <br />
                 <p class="share-text">Share Graph:</p>
                 <div class="share-button-container">
-                    <a class="twitter-share-button"
-                      href="https://twitter.com/intent/tweet?text=Hello%20world"
-                      data-size="large"
-                      data-url="https://word-stocks.calderwhite.me/api/words/fashion/graph"
-                      >
-                    Tweet</a>
+                    <div id="twitter-container">
+                    </div>
 
                 </div>
             </div>
