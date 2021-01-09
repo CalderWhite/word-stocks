@@ -18,6 +18,8 @@ from tabulate import tabulate
 
 
 def get_word_data(word, chart=False):
+    word = word.lower()
+
     conn_string = "dbname='investment_data' user='calder' host='localhost'"
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
@@ -59,6 +61,7 @@ def get_word_data(word, chart=False):
 
 
 def plot_word(word, output_format='svg'):
+    word = word.lower()
     
     x, r2 = get_word_data(word)
 
@@ -86,6 +89,8 @@ def plot_word(word, output_format='svg'):
     return output
 
 def word_metadata(word):
+    word = word.lower()
+
     conn_string = "dbname='investment_data' user='calder' host='localhost'"
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
