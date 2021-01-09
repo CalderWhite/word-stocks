@@ -117,3 +117,42 @@ td:nth-child(2) {
     margin-top: 3px !important;
     transform: scale(1.2);
 }
+
+.how-to-section {
+    color: white;
+    padding: 3em;
+}
+
+.col-30-p {
+    width: 33.33%;
+}
+
+.col-30-p > p, h1 {
+    font-family: Roboto, sans-serif;
+}
+
+.col-30-p > p {
+    font-size: 1.2em;
+    font-weight: 400;
+    color: #d6d6d6;
+}
+
+.col-30-p > h1 {
+    font-size: 1.5em;
+}
+
+/* div crap. too lazy to do this the right way */
+
+.col-30-p > div > p, h1 {
+    font-family: Roboto, sans-serif;
+}
+
+.col-30-p > div > p {
+    font-size: 1.2em;
+    font-weight: 400;
+    color: #d6d6d6;
+}
+
+.col-30-p > div > h1 {
+    font-size: 1.5em;
+}
