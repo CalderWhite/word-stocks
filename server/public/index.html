@@ -40,6 +40,9 @@
           return t;
         }(document, "script", "twitter-wjs"));</script>
 
+        <!-- Linkedin share scripts !-->
+        <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+
         <link rel="stylesheet" href="/static/main.css">
         <script src="/static/main.js"></script>
     </head>
@@ -54,7 +57,9 @@
             </form>
           </div>
           <div class="d-flex flex-row flex-wrap justify-content-center">
-            <div class="graph-stats" style="opacity:0">
+            <div id="first-stats">
+                <div class="graph-stats" style="opacity:0">
+                </div>
             </div>
             <div id="graph-container">
 
@@ -64,9 +69,9 @@
                 </div>
                 <br />
                 <p class="share-text">Share Graph:</p>
-                <div class="share-button-container">
-                    <div id="twitter-container">
-                    </div>
+                <div class="share-button-container d-flex flex-row">
+                    <div id="twitter-container"></div>
+                    <div id="linkedin-container"></div>
 
                 </div>
             </div>

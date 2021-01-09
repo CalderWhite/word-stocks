@@ -18,22 +18,16 @@
 
         <title>{{ title }}</title>
 
-        <meta name="twitter:creator" content="@calder_white" />
-
         <!-- open graph stuff !-->
-        <meta data-rh="true" property="twitter:title" content="{{ title }}">
+        <meta property="twitter:title" content="{{ title }}">
         <meta property="og:image" content="https://{{hostname}}/api/words/{{word}}/graph?format=png" />
-
+        <meta property="og:url" content="https://{{hostname}}/words/{{word}}" />
         <meta property="og:description" content="Track the Performance of stocks relating to a word." />
 
-        <!-- maybe we can trick the crawler bots to point to the actual web app instead of this dummy page? !-->
-        <meta property="og:url" content="https://{{hostname}}/?word={{word}}" />
-
         <!-- twitter stuff !-->
-        <meta data-rh="true" property="twitter:title" content="{{ title }}">
-        <meta data-rh="true" name="twitter:card" content="summary_large_image">
-
-
+        <meta name="twitter:title" content="{{ title }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:creator" content="@calder_white" />
     </head>
     <body>
     </body>
