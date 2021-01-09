@@ -156,3 +156,7 @@ td:nth-child(2) {
 .col-30-p > div > h1 {
     font-size: 1.5em;
 }
+
+.email-link:hover {
+    color: #3b99ff;
+}
