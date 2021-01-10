@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/home/calder/word-stocks/server
-ExecStart=/home/calder/.local/bin/gunicorn --bind 0.0.0.0:443 wsgi
+ExecStart=/home/calder/.local/bin/gunicorn --bind 0.0.0.0:443 --log-level DEBUG --certfile=/etc/letsencrypt/live/word-stocks.calderwhite.me/fullchain.pem --keyfile=/etc/letsencrypt/live/word-stocks.calderwhite.me/privkey.pem --workers 4 wsgi
 Restart=on-abort
 
 [Install]

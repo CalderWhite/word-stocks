@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/home/calder/word-stocks/server/redirect_server
-ExecStart=/home/calder/.local/bin/gunicorn --bind 0.0.0.0:80 wsgi
+ExecStart=/home/calder/.local/bin/gunicorn --bind 0.0.0.0:80 --workers 4 wsgi
 Restart=on-abort
 
 [Install]
