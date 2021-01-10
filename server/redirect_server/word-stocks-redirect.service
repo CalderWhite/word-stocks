@@ -5,8 +5,8 @@ After=network.target
 [Service]
 Type=simple
 User=root
-WorkingDirectory=/home/calder/word-stocks/server
-ExecStart=/usr/bin/python3 http_redirect_server.py
+WorkingDirectory=/home/calder/word-stocks/server/redirect_server
+ExecStart=/home/calder/.local/bin/gunicorn --bind 0.0.0.0:80 wsgi
 Restart=on-abort
 
 [Install]
